@@ -1,0 +1,3 @@
+LOGO font: poiret One.
+APP font: ROBOTO
+palette: su coolors
