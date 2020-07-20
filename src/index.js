@@ -7,7 +7,7 @@ let MAPS_KEY = process.env.BING_MAPS_API_KEY;
 
 /******************************************************************************************************************************************************************************/
 //location prototype.
-class location {
+class Location {
 
     constructor(name, lat, long) {
         this.name = name;
@@ -59,7 +59,7 @@ var loader = {
 /*************************************************************************************************************************************************************************/
 //VARIABLES
 
-let Geo;
+let Geolocation;
 
 /*************************************************************************************************************************************************************************/
 
@@ -87,8 +87,7 @@ function getPosition() {
 }
 
 function savePosition(position) {
-    findNamePlace(position.coords.latitude, position.coords.longitude)
-        //Geo = new location("Geolocation", position.coords.latitude, position.coords.longitude)
+    setGeolocationLocation(position.coords.latitude, position.coords.longitude)
 }
 
 function showError(error) {
@@ -128,8 +127,7 @@ const getDefaultPosition = () => {
 }
 
 //find a name of a specified (lat,long) position
-function findNamePlace(lat, long) {
-    console.log(long)
+function setGeolocationLocation(lat, long) {
     var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
     Microsoft.Maps.loadModule('Microsoft.Maps.Search', function() {
         var searchManager = new Microsoft.Maps.Search.SearchManager(map);
@@ -138,7 +136,8 @@ function findNamePlace(lat, long) {
             callback: function(answer, userData) {
                 map.setView({ bounds: answer.bestView });
                 map.entities.push(new Microsoft.Maps.Pushpin(reverseGeocodeRequestOptions.location));
-                console.log(answer)
+                Geolocation = new Location(`${answer.address.locality}  ${answer.address.adminDistrict}`, lat, long)
+                console.log(Geolocation);
             }
         };
         searchManager.reverseGeocode(reverseGeocodeRequestOptions);
