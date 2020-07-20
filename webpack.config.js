@@ -30,6 +30,9 @@ module.exports = {
             },
         ],
     },
+    devServer: {
+        contentBase: './dist',
+    },
     plugins: [
         new Dotenv({
             path: './variables.env', // load this now instead of the ones in '.env'
