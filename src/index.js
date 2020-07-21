@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import './style.css';
+import { resolve } from 'url';
 const $ = require("jquery");
 
 let MAPS_KEY = process.env.BING_MAPS_API_KEY;
@@ -8,7 +9,6 @@ let MAPS_KEY = process.env.BING_MAPS_API_KEY;
 /******************************************************************************************************************************************************************************/
 //location prototype.
 class Location {
-
     constructor(name, lat, long) {
         this.name = name;
         this.point = {
@@ -16,13 +16,12 @@ class Location {
             long
         }
     }
-
 }
 
 /******************************************************************************************************************************************************************************/
 
 
-//dynamic loader
+//dynamic loader (credit: https://code-boxx.com/dynamically-load-javascript-css/)
 var loader = {
     js: function(url, loaded) {
         // loader.js() : load the specified JS file
@@ -59,6 +58,10 @@ var loader = {
 /*************************************************************************************************************************************************************************/
 //VARIABLES
 
+//the actual location
+let actualLocation;
+
+//location defined by geolocation
 let Geolocation;
 
 /*************************************************************************************************************************************************************************/
@@ -66,15 +69,25 @@ let Geolocation;
 
 //document ready callbacks
 $(function() {
+
+    //load bing map api script
+    loader.js(`https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=${MAPS_KEY}`)
+
+    getBackground();
+
+    setFirstLocation();
+
+});
+
+
+//set a default or a gelocated first location
+function setFirstLocation() {
     //try to get position by user
     getPosition();
+    //set a default position
+    setDefaultPosition();
 
-    if (typeof Geo != "object") {
-
-    } else {
-        getDefaultPosition();
-    }
-});
+}
 
 
 // Geolocation function
@@ -86,58 +99,60 @@ function getPosition() {
     }
 }
 
+
 function savePosition(position) {
-    setGeolocationLocation(position.coords.latitude, position.coords.longitude)
+    setTimeout(() => {
+        setGeolocationLocation(position.coords.latitude, position.coords.longitude)
+    }, 200);
 }
 
 function showError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
             console.log("User denied the request for Geolocation.")
+            GeoActive = false;
             break;
         case error.POSITION_UNAVAILABLE:
             console.log("Location information is unavailable.")
+            GeoActive = false;
             break;
         case error.TIMEOUT:
             console.log("The request to get user location timed out.")
+            GeoActive = false;
             break;
         case error.UNKNOWN_ERROR:
             console.log("An unknown error occurred.")
+            GeoActive = false;
+            break;
+        default:
+            GeoActive = false;
             break;
     }
 }
 
 
 // get default position and set it.
-const getDefaultPosition = () => {
-    var data = null;
-
-    var xhr = new XMLHttpRequest();
-
-    xhr.addEventListener("readystatechange", function() {
-        if (this.readyState === this.DONE) {
-
-            setLocation(JSON.parse(this.responseText));
-        }
-    });
-
-    xhr.open("GET", "https://api.climacell.co/v3/locations/5f1575378bdd780012bcfec8?apikey=CLJxtO5VC6ZdfLB4rB8I2YPQ5LSTtKsQ");
-
-    xhr.send(data);
+async function setDefaultPosition() {
+    //let location = await getLocationClimacell("5f1575378bdd780012bcfec8")
+    console.log(location);
+    setMap(location.point.lat, location.point.lon)
 }
 
-//find a name of a specified (lat,long) position
+//set the map and the name of the Geolocated location
 function setGeolocationLocation(lat, long) {
     var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
     Microsoft.Maps.loadModule('Microsoft.Maps.Search', function() {
         var searchManager = new Microsoft.Maps.Search.SearchManager(map);
         var reverseGeocodeRequestOptions = {
-            location: new Microsoft.Maps.Location(Number.parseFloat(lat + ".0"), Number.parseFloat(long + ".0")),
             callback: function(answer, userData) {
-                map.setView({ bounds: answer.bestView });
+                map.setView({
+                    center: new Microsoft.Maps.Location(Number.parseFloat(lat + ".0"), Number.parseFloat(long + ".0")),
+                    mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+                });
                 map.entities.push(new Microsoft.Maps.Pushpin(reverseGeocodeRequestOptions.location));
                 Geolocation = new Location(`${answer.address.locality}  ${answer.address.adminDistrict}`, lat, long)
                 console.log(Geolocation);
+
             }
         };
         searchManager.reverseGeocode(reverseGeocodeRequestOptions);
@@ -145,6 +160,56 @@ function setGeolocationLocation(lat, long) {
 
 }
 
+
+function setMap(lat, long) {
+    var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
+    map.setView({
+        center: new Microsoft.Maps.Location(lat, long),
+        mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+        zoom: 8
+    });
+
+}
+
+
+function getLocationClimacell(id) {
+
+    return new Promise(resolve => {
+        async function myFetch() {
+            let response = await fetch(`https://api.climacell.co/v3/locations/${id}?apikey=CLJxtO5VC6ZdfLB4rB8I2YPQ5LSTtKsQ`);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                resolve(await response.json())
+
+            }
+        }
+        myFetch()
+            .catch(e => {
+                console.log('There has been a problem with your fetch operation: ' + e.message);
+            });
+    });
+
+
+
+}
+
+function getBackground() {
+    var d = new Date();
+    let hour = d.getHours();
+
+    (hour > 4) && (hour < 12) ? (setB("morning")) : (null);
+    (hour > 11) && (hour < 17) ? (setB("afternoon")) : (null);
+    (hour > 16) && (hour < 21) ? (setB("evening")) : (null);
+    (hour > 20) && (hour < 5) ? (setB("night")) : (null);
+
+}
+
+const setB = (variable) => {
+    $(".background").css("background-color", `var(--${variable})`);
+    console.log(variable)
+}
 
 const setLocation = (location) => {
 

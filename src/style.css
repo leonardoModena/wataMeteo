@@ -1,3 +1,34 @@
-#u {
-    background-color: red;
+:root {
+    font-size: 16px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    --morning: red;
+    --afternoon: yellow;
+    --evening: purple;
+    --night: black;
+}
+
+#myMap {
+    width: 10rem !important;
+    height: 10rem;
+    z-index: 2;
+    position: absolute;
+    overflow: hidden;
+}
+
+.background {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    outline: none;
 }
