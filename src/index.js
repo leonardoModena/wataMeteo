@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import './style.css';
+import Logo from './img/logo.png';
 import { resolve } from 'url';
 const $ = require("jquery");
 
@@ -69,6 +70,10 @@ let Geolocation;
 
 //document ready callbacks
 $(function() {
+
+    console.log(Logo);
+
+    start()
 
     //load bing map api script
     loader.js(`https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=${MAPS_KEY}`)
@@ -207,10 +212,30 @@ function getBackground() {
 }
 
 const setB = (variable) => {
-    $(".background").css("background-color", `var(--${variable})`);
+    $(".background").css("background-image", `var(--${variable})`);
     console.log(variable)
 }
 
 const setLocation = (location) => {
+
+}
+
+function start() {
+    let logoIMG = document.getElementById("logo-big");
+    logoIMG.src = Logo;
+
+    setTimeout(() => {
+        $("#logo-big").addClass("explodeLogo")
+    }, 800);
+
+    setTimeout(() => {
+        $(".uga").addClass("displayApp");
+    }, 1080);
+
+    setTimeout(() => {
+        $("#logo-big").hide();
+        $(".uga").addClass("opacity");
+    }, 1580);
+
 
 }

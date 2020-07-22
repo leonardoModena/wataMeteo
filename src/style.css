@@ -4,10 +4,11 @@
     margin: 0;
     padding: 0;
     border: none;
-    --morning: red;
-    --afternoon: yellow;
-    --evening: purple;
-    --night: black;
+    --morning: linear-gradient(to top right, #FFFFFF 0%, #AACFEF 100%);
+    --afternoon: linear-gradient(25deg, rgb(255, 252, 205) 0%, rgb(186, 207, 184) 30%, rgb(49, 153, 182) 100%);
+    --evening: linear-gradient(to top right, #FFFFFF 0%, #AACFEF 100%);
+    --night: linear-gradient(to top right, #FFFFFF 0%, #AACFEF 100%);
+    ;
 }
 
 #myMap {
@@ -16,6 +17,7 @@
     z-index: 2;
     position: absolute;
     overflow: hidden;
+    display: none;
 }
 
 .background {
@@ -31,4 +33,63 @@
     left: 0;
     overflow: hidden;
     outline: none;
+}
+
+.initial-logo {
+    position: absolute;
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-bottom: 4rem;
+}
+
+#logo-big {
+    width: 80%;
+}
+
+.explodeLogo {
+    animation: explode 0.8s ease;
+}
+
+@keyframes explode {
+    0% {
+        opacity: 1;
+        transform: scale(1)
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+.uga {
+    opacity: 0;
+    transform-origin: top;
+}
+
+.displayApp {
+    animation: display 0.5s ease;
+}
+
+@keyframes display {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.opacity {
+    opacity: 1;
+}
+
+.app {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
