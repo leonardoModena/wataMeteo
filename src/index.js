@@ -65,7 +65,20 @@ let actualLocation;
 //location defined by geolocation
 let Geolocation;
 
+//boolean of the state of the search
+let searchOpenClose = false
+
+
 /*************************************************************************************************************************************************************************/
+
+$(".search-box").click(() => {
+    searchOpenClose ? $("#search-input").removeClass("search-input-open") : $("#search-input").addClass("search-input-open")
+    searchOpenClose ? $(".search-box").removeClass("move-search") : $(".search-box").addClass("move-search")
+    searchOpenClose = !searchOpenClose
+})
+
+/*************************************************************************************************************************************************************************/
+
 
 
 //document ready callbacks
@@ -220,6 +233,8 @@ const setLocation = (location) => {
 
 }
 
+
+
 function start() {
     let logoIMG = document.getElementById("logo-big");
     logoIMG.src = Logo;
@@ -229,13 +244,12 @@ function start() {
     }, 800);
 
     setTimeout(() => {
-        $(".uga").addClass("displayApp");
+        $(".first-page").addClass("displayApp");
     }, 1080);
 
     setTimeout(() => {
         $("#logo-big").hide();
-        $(".uga").addClass("opacity");
+        $(".first-page").addClass("opacity");
     }, 1580);
-
 
 }
