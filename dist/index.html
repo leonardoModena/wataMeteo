@@ -6,26 +6,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Wata!</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AuPRk6DJcU5ZRtJQJQKTBQAYDPgh-KtjM-LviGXnw5uWmYbWm4ww1nW9Afbr94Ro"></script>
+    <script src="https://www.bing.com/api/maps/mapcontrol?callback=initMap()&key=AuPRk6DJcU5ZRtJQJQKTBQAYDPgh-KtjM-LviGXnw5uWmYbWm4ww1nW9Afbr94Ro"></script>
 </head>
 
 <body>
     <div class="background"></div>
 
     <div class="app">
-        <div class="initial-logo"><img src="" alt="logo" id="logo-big"></div>
-        <div class="first-page">
-            <div class="search-box"><i class="material-icons">search</i><input type="text" name="" id="search-input"></div>
-            <div class="deg">10°</div>
-            <div class="deg-desc">chilly</div>
-            <div class="forecast"></div>
+
+        <div class="content">
+            <div class="initial-logo"><img src="" alt="logo" id="logo-big"></div>
+            <div class="first-page">
+                <div class="bar">
+                    <i class="far fa-star star"></i>
+                </div>
+                <div class="container-wt">
+
+                    <div class="search-box" id="Sb"><i class="fas fa-search"></i><input type="text" name="" id="search-input">
+                    </div>
+                    <div class="deg">10°</div>
+                    <div class="deg-desc">chilly</div>
+                    <div class="forecast">
+                        <div class="for-item"><span class="hour-item">NOW</span><i class="fas fa-cloud-showers-heavy icon-m"></i><span>13°</span></div>
+                        <div class="for-item"><span class="hour-item">12</span><i class="fas fa-cloud-showers-heavy icon-m"></i><span>13°</span></div>
+                        <div class="for-item"><span class="hour-item">13</span><i class="fas fa-cloud-showers-heavy icon-m"></i><span>13°</span></div>
+                        <div class="for-item"><span class="hour-item">14</span><i class="fas fa-cloud-showers-heavy icon-m"></i><span>13°</span></div>
+                        <div class="for-item"><span class="hour-item">15</span><i class="fas fa-cloud-showers-heavy icon-m"></i><span>13°</span></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="drower-bm">
+                <div class="divider"><span></span></div>
+                <div class="day">
+                    <div class="day-item active">MON</div>
+                    <div class="day-item">TUE</div>
+                    <div class="day-item">WED</div>
+                    <div class="day-item">THU</div>
+                    <div class="day-item">FRI</div>
+                    <div class="day-item">SAT</div>
+                    <div class="day-item">SUN</div>
+                </div>
+                <div class="grid">
+                    <div class="card-forecast">
+                        <div class="c-fd">
+                            <div class="time">
+                                <i class="fas fa-cloud-sun"></i>
+                                <div>12°</div>
+                            </div>
+                            <div class="wuph">
+                                <span>
+                                    <div class="wuph-item"><i class="fas fa-wind"></i><span>x</span></div>
+                            <div class="wuph-item"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <path
+                                                        d="M344.864,112.832c-26.176-33.408-53.248-67.904-75.072-104.96C266.912,3.008,261.664,0,256,0s-10.912,3.008-13.76,7.872
+                                               c-21.824,37.024-48.896,71.552-75.072,104.928C114.112,180.448,64,244.352,64,320c0,105.888,86.112,192,192,192
+                                               s192-86.112,192-192C448,244.384,397.92,180.48,344.864,112.832z M256,480c-88.224,0-160-71.776-160-160
+                                               c0-64.608,46.784-124.256,96.352-187.456c21.632-27.584,43.84-55.904,63.648-86.24c19.808,30.336,42.016,58.688,63.648,86.272
+                                               C369.216,195.744,416,255.424,416,320C416,408.224,344.224,480,256,480z" />
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <path
+                                                        d="M208,192c-26.464,0-48,21.536-48,48s21.536,48,48,48s48-21.536,48-48S234.464,192,208,192z M208,256
+                                               c-8.832,0-16-7.168-16-16c0-8.832,7.168-16,16-16c8.832,0,16,7.168,16,16C224,248.832,216.832,256,208,256z" />
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <path d="M304,352c-26.464,0-48,21.536-48,48s21.536,48,48,48s48-21.536,48-48S330.464,352,304,352z M304,416c-8.8,0-16-7.2-16-16
+                                               s7.2-16,16-16s16,7.2,16,16S312.8,416,304,416z" />
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <path
+                                                        d="M347.296,228.704c-6.24-6.24-16.384-6.24-22.624,0l-160,160c-6.24,6.24-6.24,16.384,0,22.624
+                                               C167.808,414.432,171.904,416,176,416s8.192-1.568,11.296-4.672l160-160C353.536,245.088,353.536,234.944,347.296,228.704z" />
+                                                </g>
+                                            </g>
+                                        </svg><span>x</span>
+                            </div>
+                            </span>
+                            <span>
+                                    <div class="wuph-item"><i class="far fa-eye"></i><span>x</span></div>
+                        <div class="wuph-item"><i class="fas fa-umbrella"></i><span>x</span></div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-forecast" style="margin-top: 1.5rem; display: flex;">
+                <div class="c-sun">
+                    <i class="far fa-sun"></i><span>06:00</span>
+                </div>
+                <div class="c-sun">
+                    <i class="far fa-moon"></i><span>21:00</span>
+                </div>
+
+            </div>
+            <div class="card-cont2">
+                <div class="card-forecast2">
+                    <i class="fas fa-cloud"></i>
+                    <span>40%</span>
+                </div>
+                <div class="card-forecast2">
+                    <i class="fas fa-tint"></i>
+                    <span>30%</span>
+                </div>
+            </div>
         </div>
+    </div>
+    </div>
+    <div class="side-nav"></div>
     </div>
 
     <div id="myMap"></div>
 
     <script async defer src="bundle.js"></script>
+    <script>
+    </script>
 </body>
 
 </html>
